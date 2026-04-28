@@ -33,6 +33,7 @@ _SUPPORTED_PROVIDERS = {
     "vllm_openai",
     "aimlapi",
     "netmind",
+    "nvidia",
     "forge",
     "avian",
     "minimax",
@@ -260,6 +261,16 @@ class GenericLLMProvider:
                      openai_api_key=os.environ["AVIAN_API_KEY"],
                      **kwargs
                 )
+        elif provider == "nvidia":
+            _check_pkg("langchain_openai")
+            from langchain_openai import ChatOpenAI
+
+            nvidia_api_base = os.environ.get("NVIDIA_API_BASE") or os.environ.get("NVIDIA_BASE_URL") or os.environ.get("OPENAI_BASE_URL")
+            kwargs["openai_api_key"] = os.environ["NVIDIA_API_KEY"]
+            if "openai_api_base" not in kwargs and nvidia_api_base:
+                kwargs["openai_api_base"] = nvidia_api_base
+
+            llm = ChatOpenAI(**kwargs)
         elif provider == "minimax":
             _check_pkg("langchain_openai")
             from langchain_openai import ChatOpenAI

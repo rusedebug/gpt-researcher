@@ -51,7 +51,7 @@ async def create_chat_completion(
         reasoning_effort: str | None = ReasoningEfforts.Medium.value,
         **kwargs
 ) -> str:
-    """Create a chat completion using the OpenAI API
+    """Create a chat completion using a configured LLM provider.
     Args:
         messages (list[dict[str, str]]): The messages to send to the chat completion.
         model (str, optional): The model to use. Defaults to None.
@@ -62,7 +62,7 @@ async def create_chat_completion(
         webocket (WebSocket): The websocket used in the currect request,
         llm_kwargs (dict[str, Any], optional): Additional LLM keyword arguments. Defaults to None.
         cost_callback: Callback function for updating cost.
-        reasoning_effort (str, optional): Reasoning effort for OpenAI's reasoning models. Defaults to 'low'.
+        reasoning_effort (str, optional): Reasoning effort for supported reasoning models. Defaults to 'low'.
         **kwargs: Additional keyword arguments.
     Returns:
         str: The response from the chat completion.

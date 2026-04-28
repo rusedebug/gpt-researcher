@@ -3,9 +3,9 @@
 As described in the [introduction](/docs/gpt-researcher/gptr/config), the default LLM and embedding is OpenAI due to its superior performance and speed. 
 With that said, GPT Researcher supports various open/closed source LLMs and embeddings, and you can easily switch between them by updating the `SMART_LLM`, `FAST_LLM` and `EMBEDDING` env variables. You might also need to include the provider API key and corresponding configuration params.
 
-Current supported LLMs are `openai`, `anthropic`, `azure_openai`, `cohere`, `google_vertexai`, `google_genai`, `fireworks`, `ollama`, `together`, `mistralai`, `huggingface`, `groq`, `bedrock`, `litellm` and `minimax`.
+Current supported LLMs are `openai`, `anthropic`, `azure_openai`, `cohere`, `google_vertexai`, `google_genai`, `fireworks`, `ollama`, `together`, `mistralai`, `huggingface`, `groq`, `bedrock`, `litellm`, `minimax`, and `nvidia`.
 
-Current supported embeddings are `openai`, `azure_openai`, `cohere`, `google_vertexai`, `google_genai`, `fireworks`, `ollama`, `together`, `mistralai`, `huggingface`, `nomic` ,`voyageai` and `bedrock`.
+Current supported embeddings are `openai`, `azure_openai`, `cohere`, `google_vertexai`, `google_genai`, `fireworks`, `ollama`, `together`, `mistralai`, `huggingface`, `nomic`, `voyageai`, `bedrock`, `netmind`, and `nvidia`.
 
 To learn more about support customization options see [here](/docs/gpt-researcher/gptr/config).
 
@@ -58,7 +58,21 @@ OPENAI_API_KEY=dummy_key
 EMBEDDING=custom:your_embedding
 ```
 
+## NVIDIA / NIM
+Use NVIDIA NIM with a direct OpenAI-compatible API endpoint. The provider uses `langchain_openai` under the hood, so your NVIDIA key and base URL should be available in environment variables.
+```env
+# NVIDIA NIM API key and optional OpenAI-compatible endpoint
+NVIDIA_API_KEY=[Your NVIDIA NIM Key]
+NVIDIA_API_BASE=[Your NVIDIA NIM OpenAI-compatible base URL]
 
+# specify NVIDIA models directly
+FAST_LLM=nvidia:<your-fast-nvidia-model>
+SMART_LLM=nvidia:<your-smart-nvidia-model>
+STRATEGIC_LLM=nvidia:<your-strategic-nvidia-model>
+EMBEDDING=nvidia:<your-nvidia-embedding-model>
+```
+
+If `NVIDIA_API_BASE` is omitted, the provider will fall back to `OPENAI_BASE_URL` when configured.
 ## Azure OpenAI
 
 In Azure OpenAI you have to chose which models you want to use and make deployments for each model. You do this on the [Azure OpenAI Portal](https://portal.azure.com/). 

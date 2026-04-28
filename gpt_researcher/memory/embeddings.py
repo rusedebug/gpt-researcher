@@ -48,6 +48,7 @@ _SUPPORTED_PROVIDERS = {
     "bedrock",
     "aimlapi",
     "netmind",
+    "nvidia",
     "openrouter",
     "minimax",
 }
@@ -156,6 +157,15 @@ class Memory:
                 from langchain_netmind import NetmindEmbeddings
 
                 _embeddings = NetmindEmbeddings(model=model, **embedding_kwargs)
+            case "nvidia":
+                from langchain_openai import OpenAIEmbeddings
+
+                nvidia_api_base = os.environ.get("NVIDIA_API_BASE") or os.environ.get("NVIDIA_BASE_URL") or os.environ.get("OPENAI_BASE_URL")
+                embedding_kwargs["openai_api_key"] = os.environ["NVIDIA_API_KEY"]
+                if nvidia_api_base:
+                    embedding_kwargs["openai_api_base"] = nvidia_api_base
+
+                _embeddings = OpenAIEmbeddings(model=model, **embedding_kwargs)
             case "mistralai":
                 from langchain_mistralai import MistralAIEmbeddings
 
